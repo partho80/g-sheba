@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:background="#00FFE1"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/sample1_txt_doctor_name"
+        android:text="Doctor_Name: Mohammad Khairul Alam Bhuiyan"
+        android:textSize="22sp"
+        android:layout_margin = "5dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/sample1_txt_patient_name"
+        android:text="Patient_Name: Alif"
+        android:textSize="20sp"
+        android:layout_margin = "5dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+    <TextView
+        android:id="@+id/sample1_txt_patient_phone"
+        android:text="Phone: 01866078132"
+        android:textSize="20sp"
+        android:layout_margin = "5dp"
+        android:textColor="@color/black"
+        android:textStyle="normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/sample1_txt_appoint_date"
+        android:text="Date: 23June,2021"
+        android:textSize="20sp"
+        android:layout_margin = "5dp"
+        android:textColor="#F44336"
+        android:textStyle="normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/sample1_txt_appoint_time"
+        android:text="Time: 7:30pm"
+        android:textSize="20sp"
+        android:layout_margin = "5dp"
+        android:textColor="#F44336"
+        android:textStyle="normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+</LinearLayout>

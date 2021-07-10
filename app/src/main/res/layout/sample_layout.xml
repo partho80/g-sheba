@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#FFEB3B"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/sample_txt_name"
+        android:text="Name: Khairul Alam Bhuiyan"
+        android:textSize="25sp"
+        android:layout_margin = "5dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/sample_txt_age"
+        android:text="Age: 23"
+        android:textSize="20sp"
+        android:layout_margin = "5dp"
+        android:textColor="@color/black"
+        android:textStyle="normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/sample_txt_condition"
+        android:text="Condition: GOOD"
+        android:textSize="20sp"
+        android:layout_margin = "5dp"
+        android:textColor="#FF3B58"
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/sample_txt_date"
+        android:text="Date: 23June,2021"
+        android:textSize="20sp"
+        android:layout_margin = "5dp"
+        android:textColor="@color/black"
+        android:textStyle="normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/sample_txt_phone"
+        android:text="Phone: 01866078132"
+        android:textSize="20sp"
+        android:layout_margin = "5dp"
+        android:textColor="@color/black"
+        android:textStyle="normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/sample_txt_email"
+        android:text="email: bhkhairul@gmail.com"
+        android:textSize="20sp"
+        android:layout_margin = "5dp"
+        android:textColor="@color/black"
+        android:textStyle="normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

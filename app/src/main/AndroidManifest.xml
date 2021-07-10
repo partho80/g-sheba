@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.g_sheba">
+
+    <uses-permission-sdk-23 android:name="android.permission.CALL_PHONE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/r"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/r"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.G_Sheba">
+        <activity android:name=".FindAppointmentActivity"></activity>
+        <activity android:name=".AppointmentActivity" />
+        <activity android:name=".FindDoctorActivity" />
+        <activity android:name=".ReportActivity" />
+        <activity android:name=".seriousCondition" />
+        <activity android:name=".mediumCondition" />
+        <activity android:name=".minorCondition" />
+        <activity android:name=".goodCondition" />
+        <activity android:name=".result" />
+        <activity android:name=".Healthcondition" />
+        <activity android:name=".G_SHEBA_Tips" />
+        <activity android:name=".HomePage" />
+        <activity android:name=".G_ShebaSignUp" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

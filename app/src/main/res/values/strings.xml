@@ -1,0 +1,74 @@
+<resources>
+    <string name="app_name">G_Sheba</string>
+    <string name="description1">
+        Gastric health refers to the health of our gut or digestive system.this system – known as the gastrointestinal tract – consists of seven of our body’s vital organs:
+        <br></br>
+        1.Stomach
+        <br></br>
+        2.Large intestine
+
+        <br></br>
+        3.Small intestine
+
+        <br></br>
+4.Oesophagus
+        <br></br>
+5.Liver
+        <br></br>
+6.Pancreas
+        <br></br>
+7.Gall bladder
+    </string>
+    <string name="description2">
+        A healthy gut is critical for maintaining our overall health and wellbeing. If our gastric health is poor, this can lead to a number of uncomfortable and painful symptoms, including:
+        <br></br>
+       1.Bloating
+          <br></br>
+2.Gas
+          <br></br>
+3.Abdominal pain
+          <br></br>
+4.Diarrhoea
+          <br></br>
+5.Constipation
+          <br></br>
+6.Nausea and vomiting
+
+
+
+    </string>
+    <string name="description3">Reducing your intake of processed foods and sugar can help to maintain digestive balance. For optimum gut health, aim to eat a varied diet that includes plenty of fresh fruit and vegetables.
+    </string>
+    <string name="description4">
+        Keeping your water levels up will help your gastric system to function effectively. Adequate water in the system ensures that waste products pass smoothly through the digestive tract, preventing bad bacteria from building up in the gut.
+
+    </string>
+    <string name="description5">
+        Studies have shown that stress can increase levels of harmful bacteria in our guts, as well as impacting our immunity. Engaging in stress-relief techniques to keep your stress levels in check can have a positive effect on your gastric health.
+
+    </string>
+    <string name="description6">
+        Aggressive factors in our gastric system include stomach acid and the digestive enzyme, pepsin. While we often hear aboutthe problems associated with an excess of stomach acid, the presence of this acid is vital for proper digestion to occur.
+
+    </string>
+    <string name="description7">
+        The gastrointestinal tract is covered by a thin layer of mucus, around 1.5mm thick. This mucus layer acts a protective barrier, preventing harmful bacteria, pathogens and free radicals from passing through the lining. These elements can cause significant damage to the gut in a number of ways, including oxidation of the cells, inflammation and infection.
+
+    </string>
+    <string name="description8">
+        As you can see, a healthy gastric system relies on both aggressive and protective factors working together to promote gut health and sustain optimal digestive function.
+
+
+
+This means having sufficient levels of stomach acid to sterilise food and trigger pepsin release, and having a fully-functioning mucus layer to protect our gut from damage and disease.
+
+    </string>
+    <string name="healthConditionText">G_SHEBA Gastric Health</string>
+    <string name="healthConditionText1"> Are you suffering from gastric,gastric pain?Are you not satisfied with your gastric health?
+
+    </string>
+    <string name="healthConditionText2">CHECK YOUR GASTRIC HEALTH CONDITION ANSWERING THE FOLLOWING QUESTION.</string>
+    <string name="appointmentName">Let us inform you the appointment schedule . Please give the following information to let you know your appointment schedule. </string>
+    <string name="appointmentDelete">To delete your previous appointment.Give following information.</string>
+    <string name="findAppointment">To know your appointment schedule, fill the following information  </string>
+</resources>

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AppointmentActivity">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_marginTop="10dp"
+            android:text="G_SHEBA APPOINTMENT"
+            android:textSize="20sp"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:layout_marginRight="60dp"
+            android:layout_marginLeft="60dp"
+            android:background="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="3dp">
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:src="@drawable/calendar"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:layout_margin="10dp"
+            android:background="#00FFE1"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="@string/appointmentName"
+                android:textColor="@color/black"
+                android:layout_margin="20dp"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:layout_marginBottom="20dp"
+                android:src="@drawable/bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/appointment_edit_txt1"
+            android:layout_marginTop="15dp"
+            android:hint="Patient_Name"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="#FFEB3B"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"/>
+        <LinearLayout
+            android:layout_margin = "10dp"
+            android:background="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="2dp">
+
+        </LinearLayout>
+        <EditText
+            android:id="@+id/appointment_edit_txt2"
+            android:hint="Patient_Phone_No"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="#FFEB3B"
+            android:inputType="number"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"/>
+        <LinearLayout
+            android:layout_margin = "10dp"
+            android:background="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="2dp">
+
+        </LinearLayout>
+        <EditText
+            android:id="@+id/appointment_edit_txt3"
+            android:hint="Appointment_Date:( 2June,2021)"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="#FFEB3B"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"/>
+        <LinearLayout
+            android:layout_margin = "10dp"
+            android:background="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="2dp">
+        </LinearLayout>
+        <EditText
+            android:id="@+id/appointment_edit_txt6"
+            android:hint="Appointment_Time:(7:30pm)"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="#FFEB3B"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"/>
+        <LinearLayout
+            android:layout_margin = "10dp"
+            android:background="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="2dp">
+
+        </LinearLayout>
+        <Button
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:text="SET_Appointment"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:id="@+id/appointment_Button1"
+            android:backgroundTint="#F8385F"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:layout_margin="10dp"
+            android:background="#00FFE1"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="@string/appointmentDelete"
+                android:textColor="@color/black"
+                android:layout_margin="20dp"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:layout_marginBottom="20dp"
+                android:src="@drawable/trash"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+        <EditText
+            android:layout_marginTop="20dp"
+            android:id="@+id/appointment_edit_txt4"
+            android:hint="Patient_Phone_No"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="#FFEB3B"
+            android:inputType="number"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"/>
+        <LinearLayout
+            android:layout_margin = "10dp"
+            android:background="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="2dp">
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/appointment_edit_txt5"
+            android:hint="Appointed_Date:(2June,2021)"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="#FFEB3B"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"/>
+        <LinearLayout
+            android:layout_margin = "10dp"
+            android:background="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="2dp">
+        </LinearLayout>
+
+
+        <Button
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:text="DELETE_Your APPOINTMENT"
+            android:layout_marginBottom="20dp"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:id="@+id/appointment_Button2"
+            android:backgroundTint="#F8385F"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/appoint1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+
+    </LinearLayout>
+
+
+</ScrollView>

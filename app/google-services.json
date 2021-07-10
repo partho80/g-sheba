@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "879373635864",
+    "project_id": "g-sheba",
+    "storage_bucket": "g-sheba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:879373635864:android:aec7b28688395b0f800e6d",
+        "android_client_info": {
+          "package_name": "com.example.g_sheba"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "879373635864-srb732vfi19aup9ji84uik13sk0dmqob.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcFhVuIXTEVxPe6L0Dmsxm_BM2z_7Wx-U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "879373635864-srb732vfi19aup9ji84uik13sk0dmqob.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
