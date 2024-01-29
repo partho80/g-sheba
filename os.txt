@@ -1,0 +1,858 @@
+1. Thread Example
+
+
+
+import java.util.Scanner;
+
+public class ThreadExample {
+    public static void main(String[] args) {
+//         Scanner scanner = new Scanner(System.in);
+// int NUM_THREADS = scanner.nextInt();
+        final int NUM_THREADS = 4;
+
+        Thread[] threads = new Thread[NUM_THREADS];
+
+        for (int i = 0; i < NUM_THREADS; i++) {
+            int finalI = i;
+            threads[i] = new Thread(() -> {
+                System.out.println("Hello Thread: "+ finalI);
+            });
+            threads[i].start();
+        }
+
+        for (Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+2 .Thread Creation With Sync Method
+
+public class ThreadCreationWithSyncMethod {
+    private static class PrintToTenTask implements Runnable {
+        private int threadNumber;
+
+        public PrintToTenTask(int threadNumber) {
+            this.threadNumber = threadNumber;
+        }
+
+        @Override
+        public void run() {
+            printToTen(threadNumber);
+        }
+    }
+
+    // Use synchronized later
+    private static void printToTen(int threadNumber) {
+        for (int i = 0; i < 10; i++) {
+            System.out.println("ThreadNo: " + threadNumber + " i: " + i);
+        }
+    }
+
+    public static void main(String[] args) {
+        for (int i = 0; i < 5; i++) {
+            Runnable runnable = new PrintToTenTask(i);
+            Thread thread = new Thread(runnable);
+            thread.start();
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+3. Reader Writer Problem
+
+import java.util.concurrent.Semaphore;
+
+public class ReaderWriterProblems {
+    private static Semaphore mutex = new Semaphore(1); // Binary semaphore for mutual exclusion
+    private static Semaphore w = new Semaphore(1); // Controls access for writers
+    private static int readCount = 0; // Number of current readers
+    private static boolean terminate = false; // Termination signal
+
+    private static int sharedData = 0;
+
+    public static void main(String[] args) {
+        // Create reader and writer threads
+        Thread[] readerThreads = new Thread[5]; // 5 reader threads
+        Thread[] writerThreads = new Thread[2]; // 2 writer threads
+
+        for (int i = 0; i < readerThreads.length; i++) {
+            readerThreads[i] = new Thread(ReaderWriterProblems::reader);
+            readerThreads[i].start();
+        }
+
+        for (int i = 0; i < writerThreads.length; i++) {
+            writerThreads[i] = new Thread(ReaderWriterProblems::writer);
+            writerThreads[i].start();
+        }
+
+        // Simulate program running for some time
+        try {
+            Thread.sleep(5000); // Run for 5 seconds
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Set the termination signal
+        terminate = true;
+
+        // Wait for all threads to finish
+        for (Thread thread : readerThreads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        for (Thread thread : writerThreads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        System.out.println("Parent quitting");
+    }
+
+    public static void reader() {
+        while (!terminate) {
+            try {
+                mutex.acquire(); // Acquire the mutex to update readCount
+
+                readCount++;
+
+                if (readCount == 1) {
+                    w.acquire(); // Acquire the w semaphore to block writers
+                }
+
+                mutex.release(); // Release the mutex
+
+                // Read from the shared resource
+                System.out.println("Reader "+ Thread.currentThread().getName() + " is reading: " + sharedData);
+
+                mutex.acquire(); // Acquire the mutex to update readCount
+
+                readCount--;
+
+                if (readCount == 0) {
+                    w.release(); // Release the w semaphore to allow writers
+                }
+
+                mutex.release(); // Release the mutex
+
+                // Continue reading or allow other readers to read
+                Thread.sleep((int) (Math.random() * 1000));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void writer() {
+        while (!terminate) {
+            try {
+                w.acquire(); // Acquire the w semaphore to write
+
+                sharedData++;
+                System.out.println("Writer " + Thread.currentThread().getName() + " is writing: " + sharedData);
+
+                w.release(); // Release the w semaphore
+
+                // Continue writing or allow other writers to write
+                Thread.sleep((int) (Math.random() * 1000));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+4. Race condition
+
+public class Race_condition {
+    boolean available;
+
+    int x;
+
+    public Race_condition() {
+        available = true;
+        x = 5;
+    }
+
+
+    void acquire() {
+        while (!available) ;
+        available = false;
+    }
+
+    void release() {
+        available = true;
+    }
+
+    class First implements Runnable {
+        Thread t;
+
+        public First() {
+            t = new Thread();
+            t.setName("First Thread");
+            t.start();
+        }
+
+        @Override
+        public void run() {
+            //System.out.println(t.getName()+" updated value of x: "+x);
+            acquire();
+            x++;
+            System.out.println(t.getName() + " updated value of x: " + x);
+            release();
+        }
+    }
+
+    class Second implements Runnable {
+        Thread t;
+
+        public Second() {
+            this.t = new Thread();
+            t.setName("Second Thread");
+            t.start();
+        }
+
+        @Override
+        public void run() {
+            //System.out.println(t.getName()+" updated value of x: "+x);
+            acquire();
+//            x--;
+            System.out.println(t.getName() + " existing value of x: " + x);
+            release();
+        }
+    }
+
+}
+
+
+race condition (main file)
+
+class Main {
+    public static void main(String[] args) {
+        Race_condition rc = new Race_condition();
+
+
+        Race_condition.First f = rc.new First();
+
+        Race_condition.Second s = rc.new Second();
+        System.out.println("Hi");
+
+
+        for(int i = 0;i<10;i++){
+            s.run();
+            f.run();
+        }
+
+        try {
+            f.t.join();
+            s.t.join();
+        } catch (Exception e) {
+        }
+    }
+}
+
+
+
+
+
+
+
+
+5. Race Condition new
+
+public class RaceConditionExample {
+
+    private static int counter = 0;
+
+    public static void main(String[] args) {
+        Thread thread1 = new Thread(() -> {
+            for (int i = 0; i < 10000; i++) {
+                counter++; // Increment counter
+            }
+        });
+
+        Thread thread2 = new Thread(() -> {
+            for (int i = 0; i < 10000; i++) {
+                counter++; // Increment counter
+            }
+        });
+
+        thread1.start();
+        thread2.start();
+
+        try {
+            thread1.join();
+            thread2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Final value of counter: " + counter);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+6. Producer Consumer
+
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.Semaphore;
+
+public class ProducerConsumer {
+
+    private static final int BUF_SIZE = 3;
+    private static int[] buffer = new int[BUF_SIZE];
+    private static int add = 0;
+    private static int rem = 0;
+    private static int num = 0;
+
+    private static Lock lock = new ReentrantLock();
+    private static Condition cCons = lock.newCondition();
+    private static Condition cProd = lock.newCondition();
+
+    public static void main(String[] args) {
+        Thread producerThread = new Thread(ProducerConsumer::producer);
+        Thread consumerThread = new Thread(ProducerConsumer::consumer);
+
+        producerThread.start();
+        consumerThread.start();
+
+        try {
+            producerThread.join();
+            consumerThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Parent quitting");
+    }
+
+    public static void producer() {
+        for (int i = 1; i <= 20; i++) {
+            lock.lock();
+            try {
+                while (num == BUF_SIZE) {
+                    cProd.await();
+                }
+
+                buffer[add] = i;
+                add = (add + 1) % BUF_SIZE;
+                num++;
+
+                cCons.signal();
+                System.out.println("Producer: inserted " + i);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                lock.unlock();
+            }
+        }
+        System.out.println("Producer quitting");
+    }
+
+    public static void consumer() {
+        while (true) {
+            lock.lock();
+            try {
+                while (num == 0) {
+                    cCons.await();
+                }
+
+                int value = buffer[rem];
+                rem = (rem + 1) % BUF_SIZE;
+                num--;
+
+                cProd.signal();
+                System.out.println("Consumer: consumed " + value);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                lock.unlock();
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+7. class ProducerConsumerUsingSemaphore {
+
+    private static final int BUF_SIZE = 3;
+    private static int[] buffer = new int[BUF_SIZE];
+    private static int add = 0;
+    private static int rem = 0;
+
+    private static Semaphore mutex = new Semaphore(1); // Binary semaphore for mutual exclusion
+    private static Semaphore empty = new Semaphore(BUF_SIZE); // Represents empty slots
+    private static Semaphore full = new Semaphore(0); // Represents filled slots
+
+    private static final int TOTAL_PRODUCE = 25;
+    private static final int TOTAL_CONSUME = 25;
+
+    public static void main(String[] args) {
+        Thread producerThread = new Thread(ProducerConsumerUsingSemaphore::producer);
+        Thread consumerThread = new Thread(ProducerConsumerUsingSemaphore::consumer);
+
+        producerThread.start();
+        consumerThread.start();
+
+        try {
+            producerThread.join();
+            consumerThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Parent quitting");
+    }
+
+    public static void producer() {
+        for (int i = 0; i < TOTAL_PRODUCE; i++) {
+            try {
+                empty.acquire(); // Wait until there's an empty slot
+                mutex.acquire(); // Acquire the lock
+
+                /* Perform the insert operation in a slot */
+                buffer[add] = (int) (Math.random() * 100); // Simulated data insertion
+                System.out.println("Producer: inserted " + buffer[add]);
+                add = (add + 1) % BUF_SIZE;
+
+                mutex.release(); // Release the lock
+                full.release(); // Increment 'full'
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void consumer() {
+        int consumedCount = 0;
+        while (consumedCount < TOTAL_CONSUME) {
+            try {
+                full.acquire(); // Wait until there's a full slot
+                mutex.acquire(); // Acquire the lock
+
+                /* Perform the remove operation from a slot */
+                int value = buffer[rem];
+                System.out.println("Consumer: consumed " + value);
+                rem = (rem + 1) % BUF_SIZE;
+                consumedCount++;
+
+                mutex.release(); // Release the lock
+                empty.release(); // Increment 'empty'
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+8. RoundRobin  PROCESS SCHEDULING
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+class Process {
+    String name;
+    int burstTime;
+
+    public Process(String name, int burstTime) {
+        this.name = name;
+        this.burstTime = burstTime;
+    }
+}
+
+public class RoundRobinExample {
+    public static void main(String[] args) {
+        // Set time quantum for Round Robin scheduling
+        int timeQuantum = 2;
+
+        // Create a queue to hold processes
+        Queue<Process> processQueue = new LinkedList<>();
+
+        // Add processes to the queue
+        processQueue.add(new Process("P1", 5));
+        processQueue.add(new Process("P2", 3));
+        processQueue.add(new Process("P3", 7));
+        processQueue.add(new Process("P4", 2));
+
+        // Perform Round Robin scheduling
+        roundRobinScheduling(processQueue, timeQuantum);
+    }
+
+    private static void roundRobinScheduling(Queue<Process> processQueue, int timeQuantum) {
+        while (!processQueue.isEmpty()) {
+            Process currentProcess = processQueue.poll();
+
+            // Simulate process execution for the time quantum
+            int remainingBurstTime = currentProcess.burstTime - timeQuantum;
+            if (remainingBurstTime > 0) {
+                System.out.println(currentProcess.name + " is running for " + timeQuantum + " units.");
+                currentProcess.burstTime = remainingBurstTime;
+                processQueue.add(currentProcess);  // Add back to the queue with the remaining burst time
+            } else {
+                System.out.println(currentProcess.name + " is running for " + currentProcess.burstTime + " units.");
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+10. Mutex lock 
+
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class MutexLockExample {
+
+    private static int counter = 0;
+    private static Lock lock = new ReentrantLock(); // Create a mutex lock
+
+    public static void main(String[] args) {
+        Thread thread1 = new Thread(() -> {
+            for (int i = 0; i < 10000; i++) {
+                incrementCounter(); // Acquire the lock before modifying counter
+            }
+        });
+
+        Thread thread2 = new Thread(() -> {
+            for (int i = 0; i < 10000; i++) {
+                incrementCounter(); // Acquire the lock before modifying counter
+            }
+        });
+
+        thread1.start();
+        thread2.start();
+
+        try {
+            thread1.join();
+            thread2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Final value of counter: " + counter); // Output should be 20000
+    }
+
+    private static void incrementCounter() {
+        lock.lock(); // Acquire the lock
+        try {
+            counter++; // Modify the shared resource
+        } finally {
+            lock.unlock(); // Release the lock, ensuring it's always released
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+11. Dead Lock
+
+public class DeadlockExample {
+
+    private static final Object resource1 = new Object();
+    private static final Object resource2 = new Object();
+
+    public static void main(String[] args) {
+        Thread thread1 = new Thread(() -> {
+            synchronized (resource1) {
+                System.out.println("Thread 1: Holding resource 1...");
+                try {
+                    Thread.sleep(100); // Simulate work
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("Thread 1: Waiting for resource 2...");
+                synchronized (resource2) {
+                    System.out.println("Thread 1: Holding resources 1 and 2");
+                }
+            }
+        });
+
+        Thread thread2 = new Thread(() -> {
+            synchronized (resource2) {
+                System.out.println("Thread 2: Holding resource 2...");
+                try {
+                    Thread.sleep(100); // Simulate work
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("Thread 2: Waiting for resource 1...");
+                synchronized (resource1) {
+                    System.out.println("Thread 2: Holding resources 2 and 1");
+                }
+            }
+        });
+
+        thread1.start();
+        thread2.start();
+    }
+}
+
+
+
+12. Bank cradit prob
+
+(Solution_1)
+public class Solution_1 {
+
+    public static int  BB = 100000;
+
+    public static void main(String[] args) {
+
+        Credit Thread_1 = new Credit(1000,1);
+        Credit Thread_2 = new Credit(500,2);
+        Credit Thread_3 = new Credit(700,3);
+        Credit Thread_4 = new Credit(300,4);
+
+        Thread_1.start();
+        Thread_2.start();
+        Thread_3.start();
+        Thread_4.start();
+    }
+}
+
+(Credit)
+public class Credit extends Thread{
+    int balance,Thread_number;
+    public Credit(int balance,int Thread_number){
+        this.balance = balance;
+        this.Thread_number = Thread_number;
+    }
+
+    @Override
+    public void run(){
+        Method.cash_out(balance,Thread_number);
+    }
+}
+
+
+(Method)
+public class Method {
+
+    synchronized public static void cash_out(int balance,int Thread_number){
+        Solution_1.BB -= balance;
+        System.out.println("After cash out of Thread " + Thread_number + " Bank Balance " + Solution_1.BB);
+    }
+}
+
+
+
+
+
+
+
+
+9.BankersAlgorithm
+DEADLOCKS
+
+
+
+
+
+import java.util.*; 
+
+class GFG 
+{ 
+
+// Number of processes 
+static int P = 4; 
+
+// Number of resources 
+static int R = 3; 
+
+// Function to find the need of each process 
+static void calculateNeed(int need[][], int maxm[][], 
+				int allot[][]) 
+{ 
+	// Calculating Need of each P 
+	for (int i = 0 ; i < P ; i++) 
+		for (int j = 0 ; j < R ; j++) 
+
+			// Need of instance = maxm instance - 
+			//				 allocated instance 
+			need[i][j] = maxm[i][j] - allot[i][j]; 
+} 
+
+// Function to find the system is in safe state or not 
+static boolean isSafe(int processes[], int avail[], int maxm[][], 
+			int allot[][]) 
+{ 
+	int [][]need = new int[P][R]; 
+
+	// Function to calculate need matrix 
+	calculateNeed(need, maxm, allot); 
+
+	// Mark all processes as infinish 
+	boolean []finish = new boolean[P]; 
+
+	// To store safe sequence 
+	int []safeSeq = new int[P]; 
+
+	// Make a copy of available resources 
+	int []work = new int[R]; 
+	for (int i = 0; i < R ; i++) 
+		work[i] = avail[i]; 
+
+	// While all processes are not finished 
+	// or system is not in safe state. 
+	int count = 0; 
+	while (count < P) 
+	{ 
+		// Find a process which is not finish and 
+		// whose needs can be satisfied with current 
+		// work[] resources. 
+		boolean found = false; 
+		for (int p = 0; p < P; p++) 
+		{ 
+			// First check if a process is finished, 
+			// if no, go for next condition 
+			if (finish[p] == false) 
+			{ 
+				// Check if for all resources of 
+				// current P need is less 
+				// than work 
+				int j; 
+				for (j = 0; j < R; j++) 
+					if (need[p][j] > work[j]) 
+						break; 
+
+				// If all needs of p were satisfied. 
+				if (j == R) 
+				{ 
+					// Add the allocated resources of 
+					// current P to the available/work 
+					// resources i.e.free the resources 
+					for (int k = 0 ; k < R ; k++) 
+						work[k] += allot[p][k]; 
+
+					// Add this process to safe sequence. 
+					safeSeq[count++] = p; 
+
+					// Mark this p as finished 
+					finish[p] = true; 
+
+					found = true; 
+				} 
+			} 
+		} 
+
+		// If we could not find a next process in safe 
+		// sequence. 
+		if (found == false) 
+		{ 
+			System.out.print("System is not in safe state"); 
+			return false; 
+		} 
+	} 
+
+	// If system is in safe state then 
+	// safe sequence will be as below 
+	System.out.print("System is in safe state.\nSafe"
+		+" sequence is: "); 
+	for (int i = 0; i < P ; i++) 
+		System.out.print(safeSeq[i] + " "); 
+
+	return true; 
+} 
+
+// Driver code 
+public static void main(String[] args) 
+{ 
+	int processes[] = {0, 1, 2, 3, 4}; 
+
+	// Available instances of resources 
+	int avail[] = {3, 3, 2}; 
+
+	// Maximum R that can be allocated 
+	// to processes 
+	int maxm[][] = {{7, 5, 3}, 
+					{3, 2, 2}, 
+					{9, 0, 2}, 
+					{2, 2, 2}, 
+					{4, 3, 3}}; 
+
+	// Resources allocated to processes 
+	int allot[][] = {{0, 1, 0}, 
+					{2, 0, 0}, 
+					{3, 0, 2}, 
+					{2, 1, 1}, 
+					{0, 0, 2}}; 
+
+	// Check system is in safe state or not 
+	isSafe(processes, avail, maxm, allot); 
+} 
+} 
+
